@@ -102,7 +102,114 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
-    
+    errorBtns.forEach((but_con) => {
+      switch (but_con.id) {
+        case 'log':
+          but_con.addEventListener('click', () => {
+            console.log("hello world");
+          });
+          break;
+
+        case 'error':
+          but_con.addEventListener('click', () => {
+            console.error("error!");
+          });
+          break;
+
+        case 'count':
+          but_con.addEventListener('click', () => {
+            console.count();
+          });
+          break;
+
+        case 'warn':
+          but_con.addEventListener('click', () => {
+            console.warn("warning!");
+          });
+          break;
+
+        case 'assert':
+          but_con.addEventListener('click', () => {
+            let n1 = 1;
+            let n2 = 4;
+            console.assert(n1 + n2 === 2, "n1 + n2 does not equal 2!");
+          });
+          break;
+
+        case 'clear':
+          but_con.addEventListener('click', () => {
+            console.clear();
+          });
+          break;
+
+        case 'dir':
+          but_con.addEventListener('click', () => {
+            const obj = {arg1: "foo", arg2: "JS"};
+            console.dir(obj);
+          });
+          break;
+
+        case 'dirxml':
+          but_con.addEventListener('click', () => {
+            const sect = document.getElementById('error-btns');
+            console.dirxml(sect);
+          });
+          break;
+
+        case 'group_s': 
+          but_con.addEventListener('click', () => {
+            console.log("level_1");
+            console.group();  
+            console.log("level 2");
+            console.group();
+            console.log("level 3");
+            console.group();
+          });
+          break;
+
+        case 'group_e':
+          but_con.addEventListener('click', () => {
+            console.groupEnd();
+            console.groupEnd();
+            console.groupEnd();
+            console.log("i'm back");
+          });
+          break;
+
+        case 'table': 
+          but_con.addEventListener('click', () => {
+            console.table(["apple", "banana", "orange"]);
+          });
+          break;
+
+        case 'start': 
+          but_con.addEventListener('click', () => {
+            console.time();
+            console.log("timer started");
+          });
+          break;
+
+        case 'end':
+          but_con.addEventListener('click', () => {
+            console.timeEnd();
+            console.log("timer ended");
+          });
+          break;
+
+        case 'trace': 
+          but_con.addEventListener('click', () => {
+            function layer_1() {
+              function layer_2() {
+                console.trace("console trace demo");
+              }
+              layer_2();
+            }
+            layer_1();  
+          });
+          break;
+
+      }
+    });
   </script>
 </body>
 
