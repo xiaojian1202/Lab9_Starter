@@ -100,7 +100,7 @@
   <script>
     window.onerror = function() {
       console.log("This is a global error handler that does nothing.");
-      return true;
+      return false;
     };
     
     class DivideByZeroError extends Error {
