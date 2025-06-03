@@ -83,25 +83,67 @@
       <button id="start">Start Timer</button>
       <button id="end">End Timer</button>
       <button id="trace">Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="trigger-global">Trigger a Global Error</button>
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "11f1e557ac954a2e9131cabf18b25872"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+  </script>
+  
+
+  <script>
+    window.onerror = function() {
+      console.log("This is a global error handler that does nothing.");
+      return true;
+    };
+    
+    class DivideByZeroError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = "DivideByZeroError";
+      }
+    }
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
-      let output = document.querySelector('output');
-      let firstNum = document.querySelector('#first-num').value;
-      let secondNum = document.querySelector('#second-num').value;
-      let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+      try {
+        let output = document.querySelector('output');
+        let firstNum = document.querySelector('#first-num').value;
+        let secondNum = document.querySelector('#second-num').value;
+        let operator = document.querySelector('#operator').value;
+        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+        if (operator === '/' && secondNum == '0') {
+          throw new DivideByZeroError("Division by zero is not allowed.");
+        }
+
+        if (firstNum === '' || secondNum === '' || isNaN(firstNum) || isNaN(secondNum)) {
+          throw new Error("Invalid input. Please enter valid numbers.");
+        }
+
+      } catch (err) {
+        console.error("An error occurred:", err.message);
+        alert("An error occurred: " + err.message);
+
+        let output_err = document.querySelector('output');
+        output_err.innerHTML = err.message;
+      }
+      
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+
     errorBtns.forEach((but_con) => {
       switch (but_con.id) {
         case 'log':
@@ -205,6 +247,12 @@
               layer_2();
             }
             layer_1();  
+          });
+          break;
+
+        case 'trigger-global':
+          but_con.addEventListener('click', () => {
+            asdalskn();
           });
           break;
 
